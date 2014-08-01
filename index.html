@@ -38,6 +38,22 @@
 					$scope.$on('measurementSelectionChange', function (e, d) {
 						alert(JSON.stringify(d, null, '\t'));
 					});
+
+
+					$scope.piedata = [
+						{
+							value: 1,
+							className: 'good'
+						},
+						{
+							value: 2,
+							className: 'medium'
+						},
+						{
+							value: 10,
+							className: 'bad'
+						}
+					];
 				}
 			);
 
@@ -85,18 +101,25 @@
 			}
 
 			.visual .axis.y line {
-			  stroke: #bbb;
+				stroke: #bbb;
 			}
 
-			.visual .axis.x {
-				line {
-					display: none;
-					font-weight: bold;
-				}
+			.visual .axis.x line {
+				display: none;
+			}
 
-				text {
-					font-weight: bold;
-				}
+			.pie .good {
+				fill: green;
+			}
+			.pie .medium {
+				fill: yellow;
+			}
+			.pie .bad {
+				fill: red;
+			}
+
+			.pie text {
+				text-anchor: middle;
 			}
 		</style>
 	</head>
@@ -104,11 +127,18 @@
 	<body ng-app="d3Charts" ng-controller="testController">
 
 		<h1>d3-charts test page!</h1>
-
 		<p>The colors are obviously only example colors.</p>
 
-		<div bdo-d3-line="areadata" bdo-d3-line-goals="goalline"
-			class="visual"></div>
+		<section>
+			<h1>BDO D3 Line!</h1>
+			<div bdo-d3-line="areadata" bdo-d3-line-goals="goalline"
+				class="visual"></div>
+		</section>
+
+		<section>
+			<h1>BDO D3 Pie</h1>
+			<div bdo-d3-pie="piedata" class="pie"></div>
+		</section>
 
 	</body>
 
