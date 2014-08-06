@@ -106,9 +106,9 @@ describe('sliding viewport', function () {
 				expect(instance.getView()).toEqual([3, 5, 8, 9]);
 
 			});
-
-
 		});
+
+
 	});
 
 
@@ -128,5 +128,34 @@ describe('sliding viewport', function () {
 
 	});
 
+	describe('setSource method', function () {
+		var instance;
+		beforeEach(function () {
+			instance = new SlidingViewport()
+				.setSource([1, 3, 5, 8, 9])
+				.setBounds([1, 4]);
+		});
+			
+		it('should recalculate the view if new source is passed', function () {
+			var view = instance.getView();
+
+			instance.setSource([]);
+
+			expect(instance.getView()).not.toEqual(view);
+		});
+
+		it('should trigger change event', function () {
+			var called = false;
+
+			instance.addEventListener('change', function () {
+				called = true;
+			});
+
+			instance.setSource([]);
+
+			expect(called).toBe(true);
+			
+		});
+	});
 
 });
