@@ -54,6 +54,18 @@
 							className: 'bad'
 						}
 					];
+
+					$scope.piedata2 = [
+						{
+							value: 0
+						},
+						{
+							value: 0
+						},
+						{
+							value: 0
+						}
+					];
 				}
 			);
 
@@ -108,6 +120,11 @@
 				display: none;
 			}
 
+			.pie {
+				width: 120px;
+				height: 120px;
+			}
+
 			.pie .good {
 				fill: green;
 			}
@@ -138,6 +155,7 @@
 		<section>
 			<h1>BDO D3 Pie</h1>
 			<div bdo-d3-pie="piedata" class="pie"></div>
+			<div bdo-d3-pie="piedata2" class="pie"></div>
 		</section>
 
 	</body>
