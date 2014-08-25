@@ -7,20 +7,13 @@ A set of angular directives using d3 to create charts.
 
 ## Installation
 
-    $ git clone https://github.com/bdo-labs/d3-charts.git
-    $ make -s
+    $ npm install bdo-labs/d3-charts
+    $ npm start
 
 
 ## Running tests
 
-    $ make -s test
-
-
-## API
-
-```Javascript
-    var d3Charts = require('d3-charts');
-```
+    $ npm test
 
 
 ## License

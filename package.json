@@ -2,12 +2,18 @@
   "name": "d3-charts",
   "version": "0.0.0",
   "description": "A set of charts directives using d3 charts",
-  "main": "lib/index.js",
   "repository": "git://github.com/bdo-labs/d3-charts.git",
   "license": "MIT",
+  "scripts": {
+    "start": "atomify --server [ --path index.html --open ]",
+    "test": "karma start"
+  },
+  "main": "lib/index.js",
   "atomify": {
     "js": {
-      "entry": "lib/index.js"
+      "entry": "lib/index.js",
+      "alias": "build.js",
+      "output": "build/build.js"
     }
   },
   "browserify": {
