@@ -2,160 +2,160 @@
 
 describe('sliding viewport', function () {
 
-	var SlidingViewport;
+  var SlidingViewport;
 
-	beforeEach(function () {
-		module('d3Charts');
+  beforeEach(function () {
+    module('d3Charts');
 
-		inject(function (_SlidingViewport_) {
-			SlidingViewport = _SlidingViewport_;
-		});
-	});
+    inject(function (_SlidingViewport_) {
+      SlidingViewport = _SlidingViewport_;
+    });
+  });
 
-	describe('constructor', function () {
-		it('should return an instance', function () {
-			var instance = new SlidingViewport();
-			expect(typeof instance).toBe('object');
-		});
+  describe('constructor', function () {
+    it('should return an instance', function () {
+      var instance = new SlidingViewport();
+      expect(typeof instance).toBe('object');
+    });
 
-		it('should accept accessor', function () {
-			var instance = new SlidingViewport(function (d) {return d.date; });
-			expect(typeof instance).toBe('object');
-		});
+    it('should accept accessor', function () {
+      var instance = new SlidingViewport(function (d) {return d.date; });
+      expect(typeof instance).toBe('object');
+    });
 
-	});
+  });
 
-	describe('created instance', function () {
-		var instance;
+  describe('created instance', function () {
+    var instance;
 
-		beforeEach(function () {
-			instance = new SlidingViewport();
-		});
+    beforeEach(function () {
+      instance = new SlidingViewport();
+    });
 
-		it('should return a view', function () {
-			expect(instance.getView()).toEqual([]);
-		});
+    it('should return a view', function () {
+      expect(instance.getView()).toEqual([]);
+    });
 
-		it('should have a setSource method', function () {
-			expect(instance.setSource).toBeTruthy();
+    it('should have a setSource method', function () {
+      expect(instance.setSource).toBeTruthy();
 
-			expect(function () {
-				instance.setSource([]);
-			}).not.toThrow();
-		});
+      expect(function () {
+        instance.setSource([]);
+      }).not.toThrow();
+    });
 
-		it('should have a setBounds method', function () {
-			expect(instance.setBounds).toBeTruthy();
+    it('should have a setBounds method', function () {
+      expect(instance.setBounds).toBeTruthy();
 
-			expect(function () {
-				instance.setBounds([1, 3]);
-			}).not.toThrow();
-		});
+      expect(function () {
+        instance.setBounds([1, 3]);
+      }).not.toThrow();
+    });
 
-		it('should return empty view with data, without bounds', function () {
-			instance.setSource([1, 2, 3]);
-			expect(instance.getView()).toEqual([]);
-		});
+    it('should return empty view with data, without bounds', function () {
+      instance.setSource([1, 2, 3]);
+      expect(instance.getView()).toEqual([]);
+    });
 
-		it('should update view on source change', function () {
-			instance.setBounds([4, 6]);
-			instance.setSource([1, 3, 5, 8, 9]);
+    it('should update view on source change', function () {
+      instance.setBounds([4, 6]);
+      instance.setSource([1, 3, 5, 8, 9]);
 
-			expect(instance.getView()).toEqual([3, 5, 8]);
+      expect(instance.getView()).toEqual([3, 5, 8]);
 
-		});
+    });
 
-		describe('setBounds method', function () {
+    describe('setBounds method', function () {
 
-			beforeEach(function () {
-				instance.setSource([1, 3, 5, 8, 9]);
-			});
+      beforeEach(function () {
+        instance.setSource([1, 3, 5, 8, 9]);
+      });
 
-			it('should select correct view', function () {
-				instance.setBounds([4, 6]);
+      it('should select correct view', function () {
+        instance.setBounds([4, 6]);
 
-				expect(instance.getView()).toEqual([3, 5, 8]);
-			});
+        expect(instance.getView()).toEqual([3, 5, 8]);
+      });
 
-			it('should handle bounds outside source array', function () {
+      it('should handle bounds outside source array', function () {
 
-				instance.setBounds([100, 200]);
-				expect(instance.getView()).toEqual([9]);
+        instance.setBounds([100, 200]);
+        expect(instance.getView()).toEqual([9]);
 
-				instance.setBounds([-10, -2]);
-				expect(instance.getView()).toEqual([1]);
+        instance.setBounds([-10, -2]);
+        expect(instance.getView()).toEqual([1]);
 
-			});
+      });
 
-			it('should handle overlapping bounds', function () {
+      it('should handle overlapping bounds', function () {
 
-				instance.setBounds([5, 200]);
-				expect(instance.getView()).toEqual([3, 5, 8, 9]);
+        instance.setBounds([5, 200]);
+        expect(instance.getView()).toEqual([3, 5, 8, 9]);
 
-				instance.setBounds([0, 4]);
-				expect(instance.getView()).toEqual([1, 3, 5]);
+        instance.setBounds([0, 4]);
+        expect(instance.getView()).toEqual([1, 3, 5]);
 
-				instance.setBounds([0, 100]);
-				expect(instance.getView()).toEqual([1, 3, 5, 8, 9]);
-			});
+        instance.setBounds([0, 100]);
+        expect(instance.getView()).toEqual([1, 3, 5, 8, 9]);
+      });
 
-			it('should handle last element correctly', function () {
+      it('should handle last element correctly', function () {
 
-				instance.setBounds([4, 8.5]);
+        instance.setBounds([4, 8.5]);
 
-				expect(instance.getView()).toEqual([3, 5, 8, 9]);
+        expect(instance.getView()).toEqual([3, 5, 8, 9]);
 
-			});
-		});
-
-
-	});
+      });
+    });
 
 
-	describe('getSource method', function () {
-
-		it('should return the same reference as given to the instance', function () {
-
-			var instance = new SlidingViewport(),
-				source = [];
-
-			instance.setSource(source);
-
-			expect(instance.getSource()).toBe(source);
-
-		});
+  });
 
 
-	});
+  describe('getSource method', function () {
 
-	describe('setSource method', function () {
-		var instance;
-		beforeEach(function () {
-			instance = new SlidingViewport()
-				.setSource([1, 3, 5, 8, 9])
-				.setBounds([1, 4]);
-		});
-			
-		it('should recalculate the view if new source is passed', function () {
-			var view = instance.getView();
+    it('should return the same reference as given to the instance', function () {
 
-			instance.setSource([]);
+      var instance = new SlidingViewport(),
+        source = [];
 
-			expect(instance.getView()).not.toEqual(view);
-		});
+      instance.setSource(source);
 
-		it('should trigger change event', function () {
-			var called = false;
+      expect(instance.getSource()).toBe(source);
 
-			instance.addEventListener('change', function () {
-				called = true;
-			});
+    });
 
-			instance.setSource([]);
 
-			expect(called).toBe(true);
-			
-		});
-	});
+  });
+
+  describe('setSource method', function () {
+    var instance;
+    beforeEach(function () {
+      instance = new SlidingViewport()
+        .setSource([1, 3, 5, 8, 9])
+        .setBounds([1, 4]);
+    });
+      
+    it('should recalculate the view if new source is passed', function () {
+      var view = instance.getView();
+
+      instance.setSource([]);
+
+      expect(instance.getView()).not.toEqual(view);
+    });
+
+    it('should trigger change event', function () {
+      var called = false;
+
+      instance.addEventListener('change', function () {
+        called = true;
+      });
+
+      instance.setSource([]);
+
+      expect(called).toBe(true);
+      
+    });
+  });
 
 });

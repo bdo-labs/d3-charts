@@ -1,163 +1,160 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test page for d3-charts</title>
+    <script src="build.js"></script>
+    <script>
 
-	<head>
-		<meta charset="utf-8">
-		<title>Test page for d3-charts</title>
-		<script src="build.js"></script>
-		<script>
+      angular.module('d3Charts').controller('testController',
+        function ($scope){
 
-			angular.module('d3Charts').controller('testController',
-				function ($scope){
+          $scope.areadata = [
+            {date: new Date(2014, 10, 1), value: 40, className: 'good'},
+            {date: new Date(2014, 11, 3), value: 10, className: 'bad'},
+            {date: new Date(2014, 12, 2), value: 20, className: 'good'},
+            {date: new Date(2015, 1, 1), value: 33, className: 'bad'},
+            {date: new Date(2015, 5, 1), value: 50, className: 'bad'},
+            {date: new Date(2015, 8, 1), value: 800, className: 'bad'},
+            {date: new Date(2016, 2, 3), value: 443, className: 'medium'},
+            {date: new Date(2016, 3, 1), value: 340, className: 'good'},
+            {date: new Date(2016, 4, 2), value: 200, className: 'good'},
+            {date: new Date(2016, 5, 4), value: 334, className: 'good'}
+          ];
 
-					$scope.areadata = [
-						{date: new Date(2014, 10, 1), value: 40, className: 'good'},
-						{date: new Date(2014, 11, 3), value: 10, className: 'bad'},
-						{date: new Date(2014, 12, 2), value: 20, className: 'good'},
-						{date: new Date(2015, 1, 1), value: 33, className: 'bad'},
-						{date: new Date(2015, 5, 1), value: 50, className: 'bad'},
-						{date: new Date(2015, 8, 1), value: 800, className: 'bad'},
-						{date: new Date(2016, 2, 3), value: 443, className: 'medium'},
-						{date: new Date(2016, 3, 1), value: 340, className: 'good'},
-						{date: new Date(2016, 4, 2), value: 200, className: 'good'},
-						{date: new Date(2016, 5, 4), value: 334, className: 'good'}
-					];
+          $scope.goalline = [
+            {date: new Date(2014, 10, 5), value: 20},
+            {date: new Date(2014, 11, 10), value: 30},
+            {date: new Date(2014, 12, 22), value: 35},
+            {date: new Date(2015, 1, 12), value: 355},
+            {date: new Date(2015, 2, 28), value: 240},
+            {date: new Date(2016, 3, 12), value: 500},
+            {date: new Date(2016, 4, 23), value: 600},
+            {date: new Date(2016, 6, 4), value: 630}
+          ];
 
-					$scope.goalline = [
-						{date: new Date(2014, 10, 5), value: 20},
-						{date: new Date(2014, 11, 10), value: 30},
-						{date: new Date(2014, 12, 22), value: 35},
-						{date: new Date(2015, 1, 12), value: 355},
-						{date: new Date(2015, 2, 28), value: 240},
-						{date: new Date(2016, 3, 12), value: 500},
-						{date: new Date(2016, 4, 23), value: 600},
-						{date: new Date(2016, 6, 4), value: 630}
-					];
-
-					$scope.$on('measurementSelectionChange', function (e, d) {
-						alert(JSON.stringify(d, null, '\t'));
-					});
-
-
-					$scope.piedata = [
-						{
-							value: 1,
-							className: 'good'
-						},
-						{
-							value: 2,
-							className: 'medium'
-						},
-						{
-							value: 10,
-							className: 'bad'
-						}
-					];
-
-					$scope.piedata2 = [
-						{
-							value: 0
-						},
-						{
-							value: 0
-						},
-						{
-							value: 0
-						}
-					];
-				}
-			);
-
-		</script>
-		<style>
-			.visual {
-				height: 400px;
-				cursor: grab;
-			}
+          $scope.$on('measurementSelectionChange', function (e, d) {
+            alert(JSON.stringify(d, null, '\t'));
+          });
 
 
-			.visual.dragging {
-				cursor: grabbing;
-			}
+          $scope.piedata = [
+            {
+              value: 1,
+              className: 'good'
+            },
+            {
+              value: 2,
+              className: 'medium'
+            },
+            {
+              value: 10,
+              className: 'bad'
+            }
+          ];
 
-			.visual .good {
-				stroke: green;
-			}
-			.visual .bad {
-				stroke: red;
-			}
-			.visual .medium {
-				stroke: yellow;
-			}
+          $scope.piedata2 = [
+            {
+              value: 0
+            },
+            {
+              value: 0
+            },
+            {
+              value: 0
+            }
+          ];
+        }
+      );
 
-			.visual circle {
-				cursor: pointer;
-				stroke-width: 2px;
-				fill: white;
-			}
+    </script>
+    <style>
+      .visual {
+        height: 400px;
+        cursor: grab;
+      }
 
-			.visual .measurement-area {
-				fill: lightblue;
-			}
 
-			.visual .axis path {
-				display: none;
-			}
+      .visual.dragging {
+        cursor: grabbing;
+      }
 
-			.visual .goal-line {
-				fill: none;
-				stroke: gray;
-				stroke-dasharray: 5,5;
-				stroke-width: 2px;
-			}
+      .visual .good {
+        stroke: green;
+      }
+      .visual .bad {
+        stroke: red;
+      }
+      .visual .medium {
+        stroke: yellow;
+      }
 
-			.visual .axis.y line {
-				stroke: #bbb;
-			}
+      .visual circle {
+        cursor: pointer;
+        stroke-width: 2px;
+        fill: white;
+      }
 
-			.visual .axis.x line {
-				display: none;
-			}
+      .visual .measurement-area {
+        fill: lightblue;
+      }
 
-			.pie {
-				width: 120px;
-				height: 120px;
-			}
+      .visual .axis path {
+        display: none;
+      }
 
-			.pie .good {
-				fill: green;
-			}
-			.pie .medium {
-				fill: yellow;
-			}
-			.pie .bad {
-				fill: red;
-			}
+      .visual .goal-line {
+        fill: none;
+        stroke: gray;
+        stroke-dasharray: 5,5;
+        stroke-width: 2px;
+      }
 
-			.pie text {
-				text-anchor: middle;
-			}
-		</style>
-	</head>
+      .visual .axis.y line {
+        stroke: #bbb;
+      }
 
-	<body ng-app="d3Charts" ng-controller="testController">
+      .visual .axis.x line {
+        display: none;
+      }
 
-		<h1>d3-charts test page!</h1>
-		<p>The colors are obviously only example colors.</p>
+      .pie {
+        width: 120px;
+        height: 120px;
+      }
 
-		<section>
-			<h1>BDO D3 Line!</h1>
-			<div bdo-d3-line="areadata" bdo-d3-line-goals="goalline"
-				class="visual"></div>
-		</section>
+      .pie .good {
+        fill: green;
+      }
+      .pie .medium {
+        fill: yellow;
+      }
+      .pie .bad {
+        fill: red;
+      }
 
-		<section>
-			<h1>BDO D3 Pie</h1>
-			<div bdo-d3-pie="piedata" class="pie"></div>
-			<div bdo-d3-pie="piedata2" class="pie"></div>
-		</section>
+      .pie text {
+        text-anchor: middle;
+      }
+    </style>
+  </head>
 
-	</body>
+  <body ng-app="d3Charts" ng-controller="testController">
 
+    <h1>d3-charts test page!</h1>
+    <p>The colors are obviously only example colors.</p>
+
+    <section>
+      <h1>BDO D3 Line!</h1>
+      <div bdo-d3-line="areadata" bdo-d3-line-goals="goalline"
+        class="visual"></div>
+    </section>
+
+    <section>
+      <h1>BDO D3 Pie</h1>
+      <div bdo-d3-pie="piedata" class="pie"></div>
+      <div bdo-d3-pie="piedata2" class="pie"></div>
+    </section>
+
+  </body>
 </html>
